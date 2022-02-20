@@ -41,13 +41,52 @@
           </div>
         </div>
 
-        <div class="dots">
-          <div class="currentImg" id="0"></div>
-          <div id="1"></div>
-          <div id="2"></div>
-          <div id="3"></div>
-        </div>
+        <div class="dots"></div>
       </div>
     </div>
   </body>
+  <script>
+    var dots = document.querySelector(".dots");
+    var quant = document.querySelectorAll(".slides .image");
+    var current = 0;
+    var image = document.getElementById("current");
+    var next = document.getElementById("next");
+    var previous = document.getElementById("previous");
+
+    for (let i = 0; i < quant.length; i++) {
+      var div = document.createElement("div");
+      div.id = i;
+      dots.appendChild(div);
+    }
+    document.getElementById("0").classList.add("currentImg");
+    var pos = document.querySelectorAll(".dots div");
+
+    for (let i = 0; i < pos.length; i++) {
+      pos[i].addEventListener("click", () => {
+        current = pos[i].id;
+        slide();
+      });
+    }
+
+    previous.addEventListener("click", () => {
+      current--;
+      slide();
+    });
+    next.addEventListener("click", () => {
+      current++;
+      slide();
+    });
+
+    function slide() {
+      if (current >= quant.length) {
+        current = 0;
+      } else if (current < 0) {
+        current = quant.length - 1;
+      }
+      document.querySelector(".currentImg").classList.remove("currentImg");
+      image.style.marginLeft = -1030 * current + "px";
+      document.getElementById(current).classList.add("currentImg");
+    }
+    slide();
+  </script>
 </html>
